@@ -1,5 +1,9 @@
 import express from "express";
-import { IRequestHandler, ScrapResultError, ScrapResultErrorType } from "types";
+import {
+  IRequestHandler,
+  ScrapResultError,
+  ScrapResultErrorType,
+} from "./types";
 
 const isValidQueryString = (query: unknown) => {
   return typeof query === "string";
@@ -41,7 +45,8 @@ export function setupController(handler: IRequestHandler) {
         return;
       }
 
-      res.status(202).json({ reason: scrapError.error });
+      res.status(202).json({ error: scrapError.error });
+      return;
     }
 
     res.status(400).json({});

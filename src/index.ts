@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
 import "./env";
-import { initializeDatasource } from "datasource";
-import { Parser } from "parser";
-import { RequestHandler } from "requestHandler";
-import { setupController } from "expressApp";
+import { initializeDatasource } from "./datasource";
+import { Parser } from "./parser";
+import { RequestHandler } from "./requestHandler";
+import { setupController } from "./expressApp";
 
 const DEFAULT_PORT = 3000;
 
@@ -12,8 +12,8 @@ async function main() {
 
   try {
     datasource = await initializeDatasource();
-  } catch {
-    console.log("Datasource initialization failed");
+  } catch (e) {
+    console.log("Datasource initialization failed", e);
     process.exit(-1);
   }
 
@@ -23,7 +23,9 @@ async function main() {
   const requestHandler = new RequestHandler(datasource, parser);
   const expressApp = setupController(requestHandler);
 
-  expressApp.listen(process.env.PORT ?? DEFAULT_PORT);
+  const port = process.env.PORT ?? DEFAULT_PORT;
+  expressApp.listen(port);
+  console.log(`Application is up and running on port ${port}`);
 }
 
 main();

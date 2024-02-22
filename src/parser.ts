@@ -1,4 +1,4 @@
-import { IPageParser, ProductInfo } from "types";
+import { IPageParser, ProductInfo } from "./types";
 
 export class Parser implements IPageParser {
   pageData?: string = undefined;

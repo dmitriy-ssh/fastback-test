@@ -1,4 +1,4 @@
-import { ScrapRequest } from "entity/scrapRequest.entity";
+import { ScrapRequest } from "./entity/scrapRequest.entity";
 import { DataSource } from "typeorm";
 import {
   IPageParser,
@@ -6,9 +6,9 @@ import {
   ProductInfo,
   ScrapResultError,
   ScrapResultErrorType,
-} from "types";
+} from "./types";
 
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export class RequestHandler implements IRequestHandler {
   datasource: DataSource;
@@ -30,10 +30,10 @@ export class RequestHandler implements IRequestHandler {
       return null;
     }
 
-    const handle = uuid.v4();
+    const handle = uuidv4();
 
     try {
-      await this.datasource.manager.create(ScrapRequest, { handle });
+      await this.datasource.manager.insert(ScrapRequest, { handle });
     } catch {
       return null;
     }

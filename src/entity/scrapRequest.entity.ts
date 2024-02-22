@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class ScrapRequest {
@@ -9,5 +9,5 @@ export class ScrapRequest {
   started_at!: Date;
 
   @Column({ nullable: true })
-  result!: string | null;
+  result?: string;
 }

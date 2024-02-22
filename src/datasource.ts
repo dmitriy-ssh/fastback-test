@@ -1,12 +1,15 @@
 import { DataSource } from "typeorm";
+import "reflect-metadata";
+import { ScrapRequest } from "./entity/scrapRequest.entity";
+import path from "path";
 
 export const initializeDatasource = async () => {
   const dataSource = new DataSource({
     type: "sqlite",
-    database: "../database.sql",
+    database: `${path.resolve(__dirname, "..")}/db.sqlite`,
     synchronize: true,
     logging: true,
-    entities: ["./entity/*"],
+    entities: [ScrapRequest],
   });
 
   await dataSource.initialize();
