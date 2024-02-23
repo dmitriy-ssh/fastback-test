@@ -1,7 +1,7 @@
 import { ScrapRequest } from "./entity/scrapRequest.entity";
 import { DataSource } from "typeorm";
 import {
-  IPageParser,
+  IPageParserFactory,
   IRequestHandler,
   ProductInfo,
   ScrapResultError,
@@ -12,18 +12,20 @@ import { v4 as uuidv4 } from "uuid";
 
 export class RequestHandler implements IRequestHandler {
   datasource: DataSource;
-  parser: IPageParser;
+  parserFactory: IPageParserFactory;
 
-  constructor(datasource: DataSource, parser: IPageParser) {
+  constructor(datasource: DataSource, parser: IPageParserFactory) {
     this.datasource = datasource;
-    this.parser = parser;
+    this.parserFactory = parser;
   }
 
   async handleProductRequest(productId: string): Promise<string | null> {
     let isPageAccessible: boolean = false;
 
+    const parser = this.parserFactory.createParser();
+
     try {
-      isPageAccessible = await this.parser.pullPageData(productId);
+      isPageAccessible = await parser.pullPageData(productId);
     } catch {}
 
     if (!isPageAccessible) {
@@ -38,7 +40,7 @@ export class RequestHandler implements IRequestHandler {
       return null;
     }
 
-    this.parser
+    parser
       .parsePageData()
       .then((info) => {
         this.datasource.manager.update(

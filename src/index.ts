@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import "./env";
 import { initializeDatasource } from "./datasource";
-import { Parser } from "./parser";
+import { Parser, ParserFactory } from "./parser";
 import { RequestHandler } from "./requestHandler";
 import { setupController } from "./expressApp";
 
@@ -19,8 +19,8 @@ async function main() {
 
   console.log("Datasource initializated");
 
-  const parser = new Parser();
-  const requestHandler = new RequestHandler(datasource, parser);
+  const parserFactory = new ParserFactory();
+  const requestHandler = new RequestHandler(datasource, parserFactory);
   const expressApp = setupController(requestHandler);
 
   const port = process.env.PORT ?? DEFAULT_PORT;

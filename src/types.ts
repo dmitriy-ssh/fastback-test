@@ -37,3 +37,7 @@ export interface IPageParser {
 
   parsePageData(): Promise<ProductInfo>;
 }
+
+export interface IPageParserFactory {
+  createParser(): IPageParser;
+}
