@@ -8,7 +8,7 @@ export const initializeDatasource = async () => {
     type: "sqlite",
     database: `${path.resolve(__dirname, "..")}/db.sqlite`,
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [ScrapRequest],
   });
 

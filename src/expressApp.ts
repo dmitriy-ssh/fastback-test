@@ -1,9 +1,7 @@
 import express from "express";
-import {
-  IRequestHandler,
-  ScrapResultError,
-  ScrapResultErrorType,
-} from "./types";
+import { IRequestHandler, ScrapResultError } from "./types";
+
+const ENDPOINT_URL = "/parse";
 
 const isValidQueryString = (query: unknown) => {
   return typeof query === "string";
@@ -12,7 +10,7 @@ const isValidQueryString = (query: unknown) => {
 export function setupController(handler: IRequestHandler) {
   const app = express();
 
-  app.get("/parse", async (req, res) => {
+  app.get(ENDPOINT_URL, async (req, res) => {
     const queryProductId = req.query["productId"];
     const queryHandleId = req.query["handleId"];
 
