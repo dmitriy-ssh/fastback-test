@@ -1,4 +1,6 @@
-This is a text project for a FastBack interview
+## Test task goal
+
+Create api to scrap data about nike.com products. The customer should send two requests - first to initiate scrapping and second to retrieve data. The minimum time between two requests should be 10 seconds.
 
 ## Configuration
 
